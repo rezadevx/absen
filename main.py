@@ -34,7 +34,8 @@ async def absen_command(_, message):
         [[InlineKeyboardButton("Absen", callback_data="absen")]]
     )
     tombol = await message.reply("📝 Silakan tekan tombol di bawah untuk absen hari ini:", reply_markup=keyboard)
-    log_pesan = await message.reply("📋 Daftar Absen:\n")
+    log_pesan = await message.reply("📋 Daftar Absen:
+")
     absen_log[chat_id] = []
     absen_hari_ini[chat_id] = {}
     absen_message_id[chat_id] = log_pesan.id
@@ -69,6 +70,14 @@ async def handle_absen(_, callback_query):
     except:
         pass
     await callback_query.answer("Absen berhasil!")
+
+@app.on_message(filters.command("start") & filters.private)
+async def start_private(_, message):
+    await message.reply(
+        "👋 Halo! Ini adalah bot absensi harian.\n\n"
+        "Gunakan perintah /absen di grup untuk mulai mencatat kehadiran.\n\n"
+        "Dibuat khusus oleh Reza DevX — Only One Devs 👑"
+    )
 
 def reset_absen():
     global absen_log, absen_hari_ini, absen_message_id
