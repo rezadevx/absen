@@ -32,13 +32,13 @@ async def absen_command(_, message):
     keyboard = InlineKeyboardMarkup(
         [[InlineKeyboardButton("Absen", callback_data="absen")]]
     )
-    tombol = await message.reply("📝 Silakan tekan tombol di bawah untuk absen hari ini:", reply_markup=keyboard)
-    log_pesan = await message.reply("📋 Daftar Absen:\n")
+    daftar = "📋 Daftar Absen:\n"
+    sent = await message.reply(daftar, reply_markup=keyboard)
     absen_log[chat_id] = []
     absen_hari_ini[chat_id] = {}
-    absen_message_id[chat_id] = log_pesan.id
+    absen_message_id[chat_id] = sent.id
     try:
-        await tombol.pin(disable_notification=True)
+        await sent.pin(disable_notification=True)
     except:
         pass
 
@@ -63,11 +63,15 @@ async def handle_absen(_, callback_query):
     absen_log[chat_id].append(hasil)
 
     daftar = "📋 Daftar Absen:\n" + "".join(absen_log[chat_id])
+    keyboard = InlineKeyboardMarkup(
+        [[InlineKeyboardButton("Absen", callback_data="absen")]]
+    )
     try:
         await app.edit_message_text(
             chat_id=chat_id,
             message_id=absen_message_id[chat_id],
-            text=daftar
+            text=daftar,
+            reply_markup=keyboard
         )
     except:
         pass
