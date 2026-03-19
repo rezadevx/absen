@@ -2,3 +2,4 @@ tgcrypto
 apscheduler
 pyrogram-navy
 pytz
+tzdata
