@@ -3,3 +3,6 @@ apscheduler
 pyrogram-navy
 pytz
 tzdata
+psutil
+requests
+distro
